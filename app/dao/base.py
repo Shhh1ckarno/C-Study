@@ -25,4 +25,10 @@ class BaseDAO():
             query = delete(cls.model).where(cls.model.id == id)
             await session.execute(query)
             await session.commit()
-    
+    @classmethod
+    async def get_all(cls):
+        async with async_sessionmaker() as session:
+            query = await session.execute(
+                select(cls.model)
+            )
+            return query.scalars().all()

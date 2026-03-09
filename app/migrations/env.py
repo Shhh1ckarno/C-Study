@@ -8,7 +8,7 @@ from sqlalchemy.engine import Connection
 from sqlalchemy.ext.asyncio import async_engine_from_config
 from app.tasks.models import Tasks
 from app.users.models import Users
-
+from app.topics.models import Topics
 from alembic import context
 import os
 from dotenv import load_dotenv

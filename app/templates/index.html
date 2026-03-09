@@ -14,7 +14,7 @@
     <header class="topbar">
         <div class="topbar_leftside">
             <div>
-                <img class="logo_img" src="{{ url_for('static', path='css/images/favicon1.png') }}" alt="">
+                <img class="logo_img" src="{{ url_for('static', path='images/favicon1.png') }}" alt="">
             </div>
             <div>
                 <h3 class="logo_text">C# Study</h3>
@@ -51,22 +51,17 @@
             </div>
 
             <div class="column_with_separation">
-                <h2>Список тем</h2>
-                <div class="topic">
-                    <h3>Тема 1</h3>
-                    <p><em>Описание темы 1</em></p>
-                </div>
-                <div class="topic">
-                    <h3>Тема 2</h3>
-                    <p><em>Описание темы 2</em></p>
-                </div>
-                <div class="topic">
-                    <h3>Тема 3</h3>
-                    <p><em>Описание темы 3</em></p>
-                </div>
-                <div class="topic">
-                    <h3>...</h3>
-                </div>
+                {% if topics %}
+                    <h2>Список тем</h2>
+                    {% for topic in topics %}
+                        <div class="topic">
+                            <h3>{{ topic.title }}</h3>
+                            <p><em>{{ topic.description }}</em></p>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <h2>Темы не найдены</h2>
+                {% endif %}
             </div>
 
             <div class="column_with_separation">

@@ -2,6 +2,7 @@ from typing import Optional
 
 from fastapi import APIRouter, Depends, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
+from app.topics.dao import TopicsDAO
 from app.users.dependencies import get_current_user_optional, templates
 from app.users.dependencies import get_current_user
 router = APIRouter(
@@ -12,9 +13,12 @@ router = APIRouter(
 
 @router.get("", response_class=HTMLResponse, include_in_schema=False)
 async def get_main_page(request: Request, user=Depends(get_current_user_optional)):
+
+    topics = await TopicsDAO.get_all()
     return templates.TemplateResponse("index.html", {
         "request": request, 
-        "user": user 
+        "user": user,
+        "topics": topics
     })
 
 @router.get("/register_page", response_class=HTMLResponse, include_in_schema=False)
