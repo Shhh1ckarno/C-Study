@@ -1,9 +1,9 @@
 from typing import Optional
 
-from fastapi import APIRouter, Depends, Request
+from fastapi import APIRouter, Depends, Form, Request
 from fastapi.responses import HTMLResponse, RedirectResponse
 from app.topics.dao import TopicsDAO
-from app.users.dependencies import get_current_user_optional, templates
+from app.users.dependencies import get_current_decoded_token, get_current_user_optional, templates
 from app.users.dependencies import get_current_user
 router = APIRouter(
     prefix="/auth",
@@ -34,3 +34,6 @@ async def get_login_page(request: Request, user=Depends(get_current_user_optiona
         return RedirectResponse(url="/auth")
         
     return templates.TemplateResponse("login.html", {"request": request, "email": email})
+
+
+

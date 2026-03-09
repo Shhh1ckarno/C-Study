@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="{{ url_for('static', path='css/images/favicon64.png') }}">
+    <link rel="icon" href="{{ url_for('static', path='images/favicon64.png') }}">
     <link rel="stylesheet" href="{{ url_for('static', path='css/style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <title>C# Study</title>
@@ -62,7 +62,47 @@
                 {% else %}
                     <h2>Темы не найдены</h2>
                 {% endif %}
+                {% if user and user.role == "admin" %}
+        <div class="admin-panel">
+            <h3>Панель администратора</h3>
+            
+            <form action="/topics/add_topic" method="post" class="card">
+                <h4>Добавить тему</h4>
+                <input type="text" name="title" placeholder="Название темы" required>
+                <textarea name="description" placeholder="Описание"></textarea>
+                <input type="text" name="tasks_ids" placeholder="ID задач через запятую (например: 1,2,3)">
+                <button type="submit" class="form_btn">Создать тему</button>
+            </form>
+
+            <br>
+
+            <form action="/topics/delete_topic" method="post" class="card">
+                <h4>Удалить тему</h4>
+                <input type="number" name="topic_id" placeholder="ID темы для удаления" required>
+                <button type="submit" class="form_btn" style="background: #ff6b6b;">Удалить</button>
+            </form>
+            <form action="/tasks/create" method="post" class="card">
+                <h4>Добавить задачу</h4>
+                <input type="text" name="title" placeholder="Название задачи" required>
+                <textarea name="description" placeholder="Описание"></textarea>
+                <input type="text" name="answers" placeholder="Варианты ответов через запятую (например: Ответ 1,Ответ 2,Ответ 3,Ответ 4)">
+                <input type="number" name="correct_answers" placeholder="Индекс правильного ответа (0-3)" required>
+                <button type="submit" class="form_btn">Создать задачу</button>
+            </form>
+            <form action="/tasks/delete" method="post" class="card">
+                <h4>Удалить задачу</h4>
+                <input type="number" name="task_id" placeholder="ID задачи для удаления" required>
+                <button type="submit" class="form_btn" style="background: #ff6b6b;">Удалить</button>
+            </form>
+            <form action="tasks/tasks_into_topic" method="post" class="card">
+                <h4>Добавить задачу в тему</h4>
+                <input type="number" name="topic_id" placeholder="ID темы" required>
+                <input type="number" name="task_id" placeholder="ID задачи" required>
+                <button type="submit" class="form_btn">Добавить</button>
+        </div>
+    {% endif %}
             </div>
+
 
             <div class="column_with_separation">
                 <h2>Дополнительные материалы</h2>
