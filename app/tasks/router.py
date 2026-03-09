@@ -16,5 +16,5 @@ async def create_task(data: STaskCreate, decoded_token: dict = Depends(get_curre
 async def delete_task(task_id: int, decoded_token: dict = Depends(get_current_decoded_token)):
     if decoded_token["role"] != "admin":
         raise HTTPException(status_code=403, detail="Недостаточно прав для удаления задачи")
-    await TasksDAO.delete_task(task_id)
+    await TasksDAO.delete_by_id(task_id)
 

@@ -115,3 +115,9 @@ main {
     color: #d4a84a;
     text-decoration: none;
 }
+.password_input_block .field-message h5 {
+    display: none;
+    color: #ff4444;
+    font-size: 0.8em;
+    margin-top: 5px;
+}

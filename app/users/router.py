@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, Request, Response
 from fastapi.responses import RedirectResponse
 from app.users.auth import create_token, get_password_hash, verify_password
 from app.users.dao import UsersDAO
+from app.users.dependencies import get_current_decoded_token
 from app.users.schemas import SUser
 from app.config import settings
 
@@ -55,3 +56,8 @@ async def logout(request: Request):
     
     return response
 
+@router.delete("/delete/{user_id}")
+async def delete_user(user_id: int, current_user=Depends(get_current_decoded_token)):
+    if current_user["role"] != "admin":
+        raise HTTPException(status_code=403, detail="Недостаточно прав для удаления пользователя")
+    await UsersDAO.delete_by_id(user_id)
