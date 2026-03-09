@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="{{ url_for('static', path='css/images/favicon64.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/register_style.css') }}">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>Вход | C# Study</title>
+</head>
+
+<body>
+    <main>
+        <form id="login-form" class="card">
+            <h2>Вход в приключение</h2>
+            
+            <div class="email_input_block">
+                <h3>Email</h3>
+                <input id="email" type="email" value="{{ email if email else '' }}" required>
+            </div>
+            
+            <div class="password_input_block">
+                <h3>Пароль</h3>
+                <input id="password" type="password" required minlength="6">
+            </div>
+            
+            <div id="error-message" style="color: #ff4444; margin-top: 10px; text-align: center; font-size: 14px;"></div>
+
+            <button class="form_btn" type="submit" style="margin-top: 20px;">Войти</button>
+            
+            <div class="subtext" style="text-align: center; margin-top: 15px;">
+                <h5 style="display: inline;">Еще нет аккаунта?</h5>
+                <a href="/auth/register_page">Зарегистрироваться</a>
+            </div>
+        </form>
+        
+        <script src="{{ url_for('static', path='js/auth.js') }}"></script>
+    </main>
+</body>
+
+</html>

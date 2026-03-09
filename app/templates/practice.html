@@ -1,0 +1,89 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="css/images/favicon64.png">
+    <link rel="stylesheet" href="theory_style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
+    <title>C# Study</title>
+</head>
+
+<body>
+    <header class="topbar">
+        <div class="topbar_leftside">
+            <div>
+                <img class="logo_img" src="images/favicon1.png" alt="">
+            </div>
+            <div>
+                <h3 class="logo_text">C# Study</h3>
+            </div>
+        </div>
+
+        <div class="topbar_rightside">
+            <span>Username</span>
+            <span>XP: 120</span>
+        </div>
+    </header>
+
+    <main class="layout">
+        <aside class="sidebar">
+            <h3 class="sidebar_title">Темы курса</h3>
+
+            <nav class="nav">
+                <ul class="nav_list">
+                    <li class="nav_item">
+                        <button class="nav_topic">Тема 1</button>
+
+                        <ul class="nav__sublist">
+                            <li><a class="nav_link nav_link--sub" href="#">Подтема 1</a></li>
+                            <li><a class="nav_link nav_link--sub is-active" href="#">Задание 1</a></li>
+                            <li><a class="nav_link nav_link--sub" href="#">Задание 2</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="nav_item">
+                        <button class="nav_topic">Тема 2</button>
+                    </li>
+
+                    <li class="nav_item">
+                        <button class="nav_topic">Тема 3</button>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <section class="content">
+            <div class="content_card">
+                <h1>Задание 1</h1>
+
+                <p>
+                    Описание вопроса
+                </p>
+
+                <form class="answers">
+                    <label class="answer">
+                        <input type="radio" name="answer">
+                        <span>Ответ 1</span>
+                    </label>
+
+                    <label class="answer">
+                        <input type="radio" name="answer">
+                        <span>Ответ 2</span>
+                    </label>
+
+                    <label class="answer">
+                        <input type="radio" name="answer">
+                        <span>Ответ 3</span>
+                    </label>
+
+                    <label class="answer">
+                        <input type="radio" name="answer">
+                        <span>Ответ 4</span>
+                    </label>
+                </form>
+                <button class="btn">
+                    Ответить
+                </button>
+            </div>
+        </section>
+    </main>
+</body>

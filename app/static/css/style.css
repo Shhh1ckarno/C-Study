@@ -1,0 +1,144 @@
+body {
+    margin: 0;
+    font-size: 16px;
+    font-weight: 100;
+    font-family: 'Cinzel', serif;
+    color: white;
+
+    background-image:
+        linear-gradient(rgba(11, 16, 38, .78), rgba(11, 16, 38, .78)),
+        url("../images/back_image.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+main {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+.logo_img {
+    width: 80px;
+}
+
+.logo_text {
+    font-size: 24px;
+    margin-top: 20%;
+}
+
+.topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 16px 24px;
+}
+
+.topbar_leftside {
+    display: flex;
+}
+
+.topbar_rightside {
+    display: flex;
+    gap: 8px;
+}
+
+.top_btn {
+    display: inline-block;
+    padding: 10px 16px;
+    color: white;
+    text-decoration: none;
+
+    border: 1px solid rgba(255, 255, 255, 0.171);
+    border-radius: 12px;
+    background: rgba(10, 15, 35, 0.5);
+}
+
+.main_part {
+    margin: 100px auto;
+    max-width: 600px;
+    padding: 0 20px;
+    text-align: center;
+}
+
+.title {
+    font-size: 60px;
+    line-height: 1;
+}
+
+.description {
+    font-size: 25px;
+}
+
+.email_form {
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+
+    width: 450px;
+    margin: 24px auto 0;
+
+    background: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+.email_form input {
+    flex: 1;
+    border: 0;
+    outline: none;
+    background: transparent;
+
+    width: 339px;
+    padding: 12px 0;
+    font-size: 18px;
+    font-family: inherit;
+    color: #111;
+}
+
+.email_btn {
+    flex: 1;
+    border: 0;
+    background: #d4a84a;
+    color: #fff;
+
+    padding: 12px 20px;
+    font-size: 18px;
+    font-weight: bold;
+    white-space: nowrap;
+    cursor: pointer;
+
+    border-radius: 12px;
+}
+
+.info {
+    min-width: 600px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 0;
+}
+
+.info>div {
+    padding: 24px 28px;
+}
+
+.info>div+div {
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.topic h3 {
+    margin: 0 0 6px;
+    font-size: 18px;
+    font-weight: 700;
+    color: #d4a84a;
+}
+
+.topic p {
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.55;
+    color: rgba(255, 255, 255, 0.68);
+}
