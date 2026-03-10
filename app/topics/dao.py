@@ -37,6 +37,7 @@ class TopicsDAO(BaseDAO):
             if task:
                 all_tasks.append(task) 
         return all_tasks
+    
     @classmethod
     async def find_topics_by_task(cls, task_id: int):
         async with async_sessionmaker() as session:

@@ -35,16 +35,6 @@ async def get_login_page(request: Request, user=Depends(get_current_user_optiona
         
     return templates.TemplateResponse("login.html", {"request": request, "email": email})
 
-@router.get("/topics/{topic_id}", response_class=HTMLResponse, include_in_schema=False)
-async def get_topic_page(request: Request, topic_id: int, user=Depends(get_current_user_optional)):
-    topic = await TopicsDAO.get_one_or_none(id=topic_id)
-    if not topic:
-        return RedirectResponse(url="/auth")
-    
-    return templates.TemplateResponse("practice.html", {
-        "request": request, 
-        "user": user,
-        "topic": topic
-    })
+
 
 
