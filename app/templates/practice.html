@@ -55,21 +55,30 @@
             <div class="content_card">
                 <h1>Задание {{task.title}}</h1>
 
-                <p>
-                    {{task.description}}
-                </p>
+<div class="task_description">
+            {{ task.description | safe }}
+        </div>
 
-                <form class="answers">
-                    {% for answer in task.answers.answers %}
-                    <label class="answer">
-                        <input type="radio" name="answer">
-                        <span>{{answer}}</span>
-                    </label>
-                    {% endfor %}
-                </form>
-                <button class="btn">
-                    Ответить
-                </button>
+ <form class="answers" method="POST" action="/tasks/{{ task.id }}/check">
+    {% for answer in task.answers.answers %}
+    <label class="answer">
+        <input type="radio" name="user_answer" value="{{ loop.index0 }}" required>
+        <span>{{ answer }}</span>
+    </label>
+    {% endfor %}
+
+    <button type="submit" class="btn_check">Проверить</button>
+</form>
+
+{% if is_correct is not none %}
+    <div class="result-box {% if is_correct %}success{% else %}error{% endif %}">
+        {% if is_correct %}
+            <p>✅ Правильно! Вы молодец.</p>
+        {% else %}
+            <p>❌ Неверно. Попробуйте другой вариант.</p>
+        {% endif %}
+    </div>
+{% endif %}
             </div>
         </section>
     </main>

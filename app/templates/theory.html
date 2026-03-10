@@ -51,25 +51,20 @@
             </nav>
         </aside>
 
-        <section class="content">
-            <div class="content_card">
-                <h1>{{ topic.title }}</h1>
+<section class="content">
+    <div class="content_card">
+        <h1>{{ topic.title }}</h1>
 
-                <p>
-                    {{ topic.description }}
-                </p>
+        <div class="topic_description">
+            {{ topic.description | safe }}
+        </div>
 
-                <pre><code>
-  if (x > 10)
-  {
-      Console.WriteLine("Hello");
-  }
-        </code></pre>
-
-                <button class="btn">
-                    Перейти к заданию
-                </button>
-            </div>
-        </section>
+        <a href="{{ '/tasks/' ~ first_task_id if first_task_id else '/topics/' ~ topic.id }}">
+            <button class="btn">
+                Перейти к заданию
+            </button>
+        </a>
+    </div>
+</section>
     </main>
 </body>

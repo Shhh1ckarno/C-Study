@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, Form, HTTPException, Request
 from fastapi.responses import RedirectResponse
 
-from app.tasks.dao import TasksDAO
+from app.tasks.dao import TasksDAO, UsersTasksSolvedDAO
 from app.tasks.schemas import STaskCreate, TaskAnswersSchema
 from app.topics.dao import TopicsDAO
 from app.users.dependencies import get_current_decoded_token
@@ -61,18 +61,54 @@ async def get_task_page(request: Request, task_id: int, user=Depends(get_current
     if not task:
         raise HTTPException(status_code=404, detail="Задача не найдена")
     
-    # Находим тему (она находится, судя по логам)
     topic = await TopicsDAO.find_topics_by_task(task_id=task_id)
-    
     navigation_tasks = []
     if topic:
-        # Загружаем список задач
         navigation_tasks = await TopicsDAO.get_tasks_from_topic(topic_id=topic.id)
-    
+
+    solved = await UsersTasksSolvedDAO.get_one_or_none(user_id=int(user["sub"]), task_id=task_id)
+    is_correct = True if solved else None
+
     return templates.TemplateResponse("practice.html", {
         "request": request,
         "task": task,
         "user": user,
         "topic": topic,
-        "navigation_tasks": navigation_tasks # ПРОВЕРЬ ЭТО ИМЯ!
+        "navigation_tasks": navigation_tasks,
+        "is_correct": is_correct  
+    })
+from fastapi import Form
+
+@router.post("/{task_id}/check")
+async def check_task_answer(
+    request: Request,
+    task_id: int,
+    user_answer: int = Form(...), 
+    user=Depends(get_current_decoded_token)
+):
+    solved = await UsersTasksSolvedDAO.get_one_or_none(user_id=int(user["sub"]), task_id=task_id)
+    task = await TasksDAO.get_one_or_none(id=task_id)
+    topic = await TopicsDAO.find_topics_by_task(task_id=task_id)
+    navigation_tasks = await TopicsDAO.get_tasks_from_topic(topic_id=topic.id)
+    if solved:
+        is_correct = True
+        return templates.TemplateResponse("practice.html", {
+        "request": request,
+        "task": task,
+        "topic": topic,
+        "navigation_tasks": navigation_tasks,
+        "user": user,
+        "is_correct": is_correct 
+    })
+    correct_indices = task.answers.get("correct_answers", [])
+    is_correct = user_answer in correct_indices
+    if is_correct:
+        await UsersTasksSolvedDAO.add(user_id=int(user["sub"]), task_id=task_id)
+    return templates.TemplateResponse("practice.html", {
+        "request": request,
+        "task": task,
+        "topic": topic,
+        "navigation_tasks": navigation_tasks,
+        "user": user,
+        "is_correct": is_correct 
     })

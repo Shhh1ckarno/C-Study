@@ -39,5 +39,6 @@ async def get_topic_page(request: Request, topic_id: int, user=Depends(get_curre
         "request": request, 
         "user": user,
         "topic": topic,
-        "tasks": tasks
+        "tasks": tasks,
+        "first_task_id": tasks[0].id if tasks else None
     })
