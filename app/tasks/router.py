@@ -1,10 +1,11 @@
-from fastapi import APIRouter, Depends, Form, HTTPException
+from fastapi import APIRouter, Depends, Form, HTTPException, Request
 from fastapi.responses import RedirectResponse
 
 from app.tasks.dao import TasksDAO
 from app.tasks.schemas import STaskCreate, TaskAnswersSchema
 from app.topics.dao import TopicsDAO
 from app.users.dependencies import get_current_decoded_token
+from app.users.dependencies import templates
 
 router = APIRouter(prefix="/tasks", tags=["Задачи"])
 
@@ -54,4 +55,24 @@ async def tasks_into_topic(task_id: int = Form(...),
     await TopicsDAO.add_task_into_topic(task_id=task_id, topic_id=topic_id)
     return RedirectResponse(url="/auth", status_code=303)
 
+@router.get("/{task_id}")
+async def get_task_page(request: Request, task_id: int, user=Depends(get_current_decoded_token)):
+    task = await TasksDAO.get_one_or_none(id=task_id)
+    if not task:
+        raise HTTPException(status_code=404, detail="Задача не найдена")
     
+    # Находим тему (она находится, судя по логам)
+    topic = await TopicsDAO.find_topics_by_task(task_id=task_id)
+    
+    navigation_tasks = []
+    if topic:
+        # Загружаем список задач
+        navigation_tasks = await TopicsDAO.get_tasks_from_topic(topic_id=topic.id)
+    
+    return templates.TemplateResponse("practice.html", {
+        "request": request,
+        "task": task,
+        "user": user,
+        "topic": topic,
+        "navigation_tasks": navigation_tasks # ПРОВЕРЬ ЭТО ИМЯ!
+    })

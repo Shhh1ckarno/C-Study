@@ -1,8 +1,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="icon" href="css/images/favicon64.png">
-    <link rel="stylesheet" href="theory_style.css">
+    <link rel="icon" href="{{ url_for('static', path='images/favicon64.png') }}">
+    <link rel="stylesheet" href="{{ url_for('static', path='css/theory_style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&display=swap" rel="stylesheet">
     <title>C# Study</title>
 </head>
@@ -11,7 +11,7 @@
     <header class="topbar">
         <div class="topbar_leftside">
             <div>
-                <img class="logo_img" src="css/images/favicon1.png" alt="">
+                <img class="logo_img" src="{{ url_for('static', path='images/favicon1.png') }}" alt="">
             </div>
             <div>
                 <h3 class="logo_text">C# Study</h3>
@@ -19,8 +19,13 @@
         </div>
 
         <div class="topbar_rightside">
-            <span>Username</span>
-            <span>XP: 120</span>
+                {% if user %}
+                <span>{{user.email}}</span>
+                <span>XP: 120</span>
+                {% else %}
+                <span>Кролик</span>
+                <span>XP: 120</span>
+                {% endif %}
         </div>
     </header>
 
@@ -31,21 +36,14 @@
             <nav class="nav">
                 <ul class="nav_list">
                     <li class="nav_item">
-                        <button class="nav_topic">Тема 1</button>
-
+                          <a href="/topics/{{ topic.id }}" class="nav_topic_button_link">
+    <button class="nav_topic">{{ topic.title }}</button>
+</a>
                         <ul class="nav__sublist">
-                            <li><a class="nav_link nav_link--sub" href="#">Подтема 1</a></li>
-                            <li><a class="nav_link nav_link--sub is-active" href="#">Задание 1</a></li>
-                            <li><a class="nav_link nav_link--sub" href="#">Задание 2</a></li>
+                                {% for navigation_task in navigation_tasks %}
+                            <li><a class="nav_link nav_link--sub" href="/tasks/{{navigation_task.id}}">{{navigation_task.title}}</a></li>
+                            {% endfor %}
                         </ul>
-                    </li>
-
-                    <li class="nav_item">
-                        <button class="nav_topic">Тема 2</button>
-                    </li>
-
-                    <li class="nav_item">
-                        <button class="nav_topic">Тема 3</button>
                     </li>
                 </ul>
             </nav>
@@ -53,32 +51,19 @@
 
         <section class="content">
             <div class="content_card">
-                <h1>Задание 1</h1>
+                <h1>Задание {{task.title}}</h1>
 
                 <p>
-                    Описание вопроса
+                    {{task.description}}
                 </p>
 
                 <form class="answers">
+                    {% for answer in task.answers.answers %}
                     <label class="answer">
                         <input type="radio" name="answer">
-                        <span>Ответ 1</span>
+                        <span>{{answer}}</span>
                     </label>
-
-                    <label class="answer">
-                        <input type="radio" name="answer">
-                        <span>Ответ 2</span>
-                    </label>
-
-                    <label class="answer">
-                        <input type="radio" name="answer">
-                        <span>Ответ 3</span>
-                    </label>
-
-                    <label class="answer">
-                        <input type="radio" name="answer">
-                        <span>Ответ 4</span>
-                    </label>
+                    {% endfor %}
                 </form>
                 <button class="btn">
                     Ответить
